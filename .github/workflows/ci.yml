@@ -6,7 +6,7 @@ on:
       - main
   pull_request:
     branches:
-      - '*'
+      - "*"
   workflow_dispatch:
 
 concurrency:
@@ -18,32 +18,44 @@ jobs:
     name: macOS
     runs-on: macos-14
     steps:
-    - uses: actions/checkout@v4
-      # - name: Setup tmate session
-      #   uses: mxschmitt/action-tmate@v2
-    - name: Select Xcode 15.3
-      run: sudo xcode-select -s /Applications/Xcode_15.3.app
-    - name: LFS pull
-      run: git lfs pull
-    - name: Install Postgres
-      run: brew install postgresql@15
-    - name: Link Postgres
-      run: brew link postgresql@15
-    - name: Start Postgres
-      run: brew services start postgresql@15
-    - name: Bootstrap
-      run: make bootstrap
-    - name: Run tests
-      run: make test
+      - uses: actions/checkout@v4
+        # - name: Setup tmate session
+        #   uses: mxschmitt/action-tmate@v2
+      - name: Select Xcode 15.3
+        run: sudo xcode-select -s /Applications/Xcode_15.3.app
+      - name: LFS pull
+        run: git lfs pull
+      - name: Install Postgres
+        run: brew install postgresql@15
+      - name: Link Postgres
+        run: brew link postgresql@15
+      - name: Start Postgres
+        run: brew services start postgresql@15
+      - name: Bootstrap
+        run: make bootstrap
+      - name: Run tests
+        run: make test
+      - name: Upload Logs
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          path: |
+            *.log
 
   ubuntu:
     name: Ubuntu
     runs-on: ubuntu-20.04
     steps:
-    - uses: actions/checkout@v4
-    - name: Install dependencies
-      run: 'sudo apt-get --fix-missing update && sudo apt-get install -y wamerican'
-    - name: Bootstrap
-      run: make bootstrap-client
-    - name: Run tests
-      run: make test-server-linux
+      - uses: actions/checkout@v4
+      - name: Install dependencies
+        run: "sudo apt-get --fix-missing update && sudo apt-get install -y wamerican"
+      - name: Bootstrap
+        run: make bootstrap-client
+      - name: Run tests
+        run: make test-server-linux
+      - name: Upload Logs
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          path: |
+            *.log

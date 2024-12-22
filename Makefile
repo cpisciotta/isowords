@@ -32,53 +32,53 @@ test-client:
 		-project App/isowords.xcodeproj \
 		-scheme isowords \
 		-destination platform="$(PLATFORM_IOS)" \
-		-skipMacroValidation
+		-skipMacroValidation > client.log
 
 build-client-preview-apps:
 	@xcodebuild \
     -project App/isowords.xcodeproj \
     -list \
-    -skipMacroValidation
+	-skipMacroValidation > client-schemes.log
 	@xcodebuild \
 		-project App/isowords.xcodeproj \
 		-scheme CubeCorePreview \
 		-destination platform="$(PLATFORM_IOS)" \
-    -skipMacroValidation
+		-skipMacroValidation > CubeCorePreview.log
 	@xcodebuild \
 		-project App/isowords.xcodeproj \
 		-scheme CubePreviewPreview \
 		-destination platform="$(PLATFORM_IOS)" \
-    -skipMacroValidation
+		-skipMacroValidation > CubePreviewPreview.log
 	@xcodebuild \
 		-project App/isowords.xcodeproj \
 		-scheme GameOverPreview \
 		-destination platform="$(PLATFORM_IOS)" \
-    -skipMacroValidation
+		-skipMacroValidation > GameOverPreview.log
 	@xcodebuild \
 		-project App/isowords.xcodeproj \
 		-scheme HomeFeaturePreview \
 		-destination platform="$(PLATFORM_IOS)" \
-    -skipMacroValidation
+		-skipMacroValidation > HomeFeaturePreview.log
 	@xcodebuild \
 		-project App/isowords.xcodeproj \
 		-scheme LeaderboardsPreview \
 		-destination platform="$(PLATFORM_IOS)" \
-    -skipMacroValidation
+		-skipMacroValidation > LeaderboardsPreview.log
 	@xcodebuild \
 		-project App/isowords.xcodeproj \
 		-scheme OnboardingPreview \
 		-destination platform="$(PLATFORM_IOS)" \
-    -skipMacroValidation
+		-skipMacroValidation > OnboardingPreview.log
 	@xcodebuild \
 		-project App/isowords.xcodeproj \
 		-scheme SettingsPreview \
 		-destination platform="$(PLATFORM_IOS)" \
-    -skipMacroValidation
+		-skipMacroValidation > SettingsPreview.log
 	@xcodebuild \
 		-project App/isowords.xcodeproj \
 		-scheme UpgradeInterstitialPreview \
 		-destination platform="$(PLATFORM_IOS)" \
-    -skipMacroValidation
+		-skipMacroValidation > UpgradeInterstitialPreview.log
 
 clean-client: clean-audio
 
@@ -203,7 +203,7 @@ else
 endif
 
 test-server:
-	@TEST_SERVER=1 swift test
+	@TEST_SERVER=1 swift test > server.log
 
 run-server-linux:
 	@docker-compose \
