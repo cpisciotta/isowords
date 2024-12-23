@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - charles/Logs
   pull_request:
     branches:
       - '*'
